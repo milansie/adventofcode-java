@@ -8,17 +8,13 @@ public enum Direction {
     RIGHT;
 
     public static Direction createDirectionFromChar(char c) {
-        switch (c) {
-            case '^':
-                return UP;
-            case 'v':
-                return DOWN;
-            case '<':
-                return LEFT;
-            case '>':
-                return RIGHT;
-        }
-        return null;
+        return switch (c) {
+            case '^' -> UP;
+            case 'v' -> DOWN;
+            case '<' -> LEFT;
+            case '>' -> RIGHT;
+            default -> null;
+        };
     }
 
     public static Character convertDirectionToChar(int[] direction) {
