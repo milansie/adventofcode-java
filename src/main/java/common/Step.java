@@ -2,32 +2,32 @@ package common;
 
 import java.util.List;
 
-public class Step {
+public class Step<T> {
 
-    private Position position;
-    private List<Position> path;
+    private T current;
+    private List<T> path;
 
     int totalCost = 0;
 
-    public Step(Position position, List<Position> path, int totalCost) {
-        this.position = position;
+    public Step(T position, List<T> path, int totalCost) {
+        this.current = position;
         this.path = path;
         this.totalCost = totalCost;
     }
 
-    public Position getPosition() {
-        return position;
+    public T getCurrent() {
+        return current;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setCurrent(T current) {
+        this.current = current;
     }
 
-    public List<Position> getPath() {
+    public List<T> getPath() {
         return path;
     }
 
-    public void setPath(List<Position> path) {
+    public void setPath(List<T> path) {
         this.path = path;
     }
 
@@ -40,6 +40,6 @@ public class Step {
     }
 
     public String toString() {
-        return "Step " + position.toString() + " totalCost: " + totalCost + " steps: " + path.size();
+        return "Step " + current.toString() + " totalCost: " + totalCost + " steps: " + path.size();
     }
 }
