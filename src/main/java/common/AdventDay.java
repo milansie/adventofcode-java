@@ -3,7 +3,6 @@ package common;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,17 +36,21 @@ public abstract class AdventDay {
         logBuffer.append(log);
     }
 
+    protected void reinit() {
+        // override
+    }
+
     public void run() {
 
         logResult("Running " + this.getClass().getPackageName() + "." + this.getClass().getSimpleName());
 
-
         isTest = true;
+        reinit();
         long start = System.currentTimeMillis();
         try {
             String firstTestResult = first(getFirstTestInput());
             assertEquals(getFirstPartTestResult(), firstTestResult);
-            logResult("First test passed in " + (System.currentTimeMillis() - start) + " ms");
+            logResult("First test passed: expected '" + getFirstPartTestResult() + "', was '" + firstTestResult + "' in " + (System.currentTimeMillis() - start) + " ms");
         } catch (AssertionError assertionError) {
             logResult("ERROR: First test failed in " + (System.currentTimeMillis() - start) + " ms");
             logResult("ERROR: " + assertionError.getMessage());
@@ -55,17 +58,19 @@ public abstract class AdventDay {
 
         if (run1) {
             isTest = false;
+            reinit();
             start = System.currentTimeMillis();
             String firstResult = first(getInput());
             logResult("First part: " + firstResult + " in " + (System.currentTimeMillis() - start) + " ms");
         }
 
         isTest = true;
+        reinit();
         start = System.currentTimeMillis();
         try {
             String secondTestResult = second(getSecondTestInput());
             assertEquals(getSecondPartTestResult(), secondTestResult);
-            logResult("Second test passed in " + (System.currentTimeMillis() - start) + " ms");
+            logResult("Second test passed: expected '" + getSecondPartTestResult() + "', was '" + secondTestResult + "' in " + (System.currentTimeMillis() - start) + " ms");
         } catch (AssertionError assertionError) {
             logResult("ERROR: Second test failed in " + (System.currentTimeMillis() - start) + " ms");
             logResult("ERROR: " + assertionError.getMessage());
@@ -73,6 +78,7 @@ public abstract class AdventDay {
 
         if (run2) {
             isTest = false;
+            reinit();
             start = System.currentTimeMillis();
             String secondResult = second(getInput());
             logResult("Second part: " + secondResult + " in " + (System.currentTimeMillis() - start) + " ms");
@@ -83,7 +89,7 @@ public abstract class AdventDay {
 
     private void writeLogResult() {
         System.out.println("==================================================================");
-        System.out.println(logBuffer.toString());
+        System.out.println(logBuffer);
         System.out.println("==================================================================");
     }
 
